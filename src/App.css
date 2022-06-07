@@ -1,0 +1,154 @@
+body{
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif !important;
+  background-color: rgb(207, 204, 204) !important;
+}
+.logo{
+  height: 40px;
+  width: 150px;
+}
+.profileIcon{
+  height: 40px;
+  width: 40px;
+}
+.navigation{
+  color: black;
+}
+.active{
+background-color:#E57200;
+color: white !important;
+}
+.background{
+  /* height: 700px; */
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+.searchIcon {
+  position: absolute;
+}
+.searchbar{
+  outline: none;
+  border: 1px solid rgb(201, 199, 199);
+}
+th{
+  color: #974d02;
+  font-size: 14px;
+}
+td{
+  font-size: 14px;
+}
+label{
+  font-weight: 600;
+}
+input::placeholder{
+  color: rgb(163, 162, 162);
+}
+.Btn{
+  background-color: orange !important;
+  font-weight: 600;
+}
+.Btn:hover{
+  background-color: orangered !important;
+}
+.icon{
+  cursor: pointer;
+}
+.icon:hover{
+  color: orange
+}
+.statusIcon[value="Active"] {
+  background-color: rgb(250, 177, 42);
+}
+.statusIcon[value="Delayed"] {
+  background-color: rgb(224, 45, 45);
+}
+.statusIcon[value="Not Started"] {
+  background-color:rgb(128, 125, 125);
+}
+.statusIcon[value="Completed"] {
+  background-color:  rgb(56, 105, 56);
+}
+.Active{
+  background-color:rgb(250, 177, 42);
+}
+.Delayed{
+  background-color:  rgb(224, 45, 45);
+}
+.Not{
+  background-color: rgb(128, 125, 125);
+}
+.Completed{
+  background-color:  rgb(56, 105, 56);
+}
+
+
+
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,400,700");
+.gantt {
+  display: grid;
+  border: 0;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.gantt__row {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  background-color: #fff;
+}
+.gantt__row--lines {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  grid-template-columns: 260px repeat(12, 1fr);
+}
+.gantt__row--lines span {
+  display: block;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.gantt__row--months {
+  color: rgb(36, 35, 35);
+  background-color:white !important;
+  grid-template-columns: 260px repeat(12, 1fr);
+}
+.gantt__row--months span {
+  text-align: center;
+  font-size: 13px;
+  align-self: center;
+  font-weight: bold;
+  padding: 20px 0;
+}
+.gantt__row-first {
+  border-width: 0px 0 0 0;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: start;
+  padding-left: 20px;
+}
+.gantt__row-bars {
+  list-style: none;
+  display: grid;
+  padding: 9px 0;
+  margin: 0;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 8px 0;
+}
+.gantt__row-bars li {
+  font-weight: 500;
+  text-align: left;
+  font-size: 14px;
+  min-height: 15px;
+  padding: 5px 12px;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border-radius: 20px;
+}
