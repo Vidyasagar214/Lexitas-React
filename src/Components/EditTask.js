@@ -6,7 +6,7 @@ import {Button,Modal} from 'react-bootstrap'
 import Header from './Header'
 import axios from 'axios';
 
-function AddTask() {
+function EditTask() {
 
 // getting the data for the selected project----
 const [projectdata, setProjectdata] = useState([]);
@@ -21,6 +21,7 @@ useEffect(() => {
 
 
  // //Adding input-----------------
+ const [id, setId] = useState('');
  const [taskname, setTaskname] = useState('');
  const [startdate, setStartdate] = useState('');
  const [enddate, setEnddate] = useState('');
@@ -30,7 +31,7 @@ useEffect(() => {
  const [description, setDescription] = useState('');
  const [error, setError] = useState('');
   
- const postData = (e) => {
+ const updateTask = (e) => {
    e.preventDefault();
    if(taskname==="" && startdate==="" && enddate==="" && status==="" &&
    taskowner==="" && priority==="" && description==="") {
@@ -69,13 +70,25 @@ useEffect(() => {
     setError("End Date must be greater than StartDate")
   }
    else{
-       axios.post(`https://6295db8d810c00c1cb69856e.mockapi.io/Tasks`, {
-        p_id:params.id,taskname,startdate,enddate,status,taskowner,priority,description,
+       axios.put(`https://6295db8d810c00c1cb69856e.mockapi.io/Tasks/${id}`, {
+       taskname,startdate,enddate,status,taskowner,priority,description,
        
        })
        handleShow()
        return true;
      }}
+
+      //  getting the data of particular editable project----
+      useEffect(() => {
+        setId(localStorage.getItem('ID'))
+          setTaskname(localStorage.getItem('Task Name'));
+          setStartdate(localStorage.getItem('Start Date'));
+          setEnddate(localStorage.getItem('End Date'));
+          setPriority(localStorage.getItem('Priority'));
+          setTaskowner(localStorage.getItem('Task Owner'));
+          setStatus(localStorage.getItem('Status'));
+          setDescription(localStorage.getItem('Description'));
+      }, []);
 
              
 // for Add modal------------------------
@@ -90,9 +103,9 @@ const handleShow = () => setShow(true);
   <div class="background pt-1">
    <div class="bg-white p-4 m-4">
      <div class="d-flex justify-content-between mb-2">
-          <h5>Add Task for Project '<strong>{projectdata.projectname}</strong>'</h5>
+          <h5>Edit Task for Project '<strong>{projectdata.projectname}</strong>'</h5>
           <div class="d-flex ">
-              <NavLink to="/ ">
+              <NavLink to={"/GanttChart/"+ params.id}>
                 <button class="btn btn-secondary rounded-0 border-0"><FaArrowLeft className='me-2 mb-1'/>Back</button>
                 </NavLink>
             </div>
@@ -101,19 +114,19 @@ const handleShow = () => setShow(true);
      <div class="row g-3 mb-4">
             <div class="col-xl-6">
                 <label for="taskname" class="form-label">Task Name</label>
-                <input type="text" class="form-control rounded-0" id="taskname"  onChange={(e) => setTaskname(e.target.value)}/>
+                <input type="text" class="form-control rounded-0" id="taskname" value={taskname} onChange={(e) => setTaskname(e.target.value)}/>
             </div>
             <div class="col-xl-2">
                 <label for="taskname" class="form-label">Start Date</label>
-                    <input type="date" class="form-control rounded-0 form-control"  onChange={(e) => setStartdate(e.target.value)} />
+                    <input type="date" class="form-control rounded-0 form-control" value={startdate}  onChange={(e) => setStartdate(e.target.value)} />
             </div>
             <div class="col-xl-2">
                 <label for="taskname" class="form-label">End Date</label>
-                    <input type="date" class="form-control rounded-0 form-control"  onChange={(e) => setEnddate(e.target.value)}/>
+                    <input type="date" class="form-control rounded-0 form-control" value={enddate}  onChange={(e) => setEnddate(e.target.value)}/>
             </div>
             <div class="col-xl-2">
                 <label for="taskname" class="form-label">Status</label>
-                  <select class="form-select rounded-0"  onChange={(e) => setStatus(e.target.value)}>
+                  <select class="form-select rounded-0" value={status}  onChange={(e) => setStatus(e.target.value)}>
                     <option selected disabled>Select</option>
                     <option>Active</option>
                     <option>Delayed</option>
@@ -125,7 +138,7 @@ const handleShow = () => setShow(true);
             <div class="row g-3 mb-4">
             <div class="col-xl-3">
                 <label for="taskname" class="form-label">Task Owner</label>
-                <select class="form-select rounded-0"  onChange={(e) => setTaskowner(e.target.value)}>
+                <select class="form-select rounded-0" value={taskowner}  onChange={(e) => setTaskowner(e.target.value)}>
                     <option selected disabled>Select</option>
                     <option>John Doe</option>
                     <option>JImmy Carter</option>
@@ -138,7 +151,7 @@ const handleShow = () => setShow(true);
             </div>
             <div class="col-xl-3">
                 <label for="taskname" class="form-label">Priority</label>
-                <select class="form-select  rounded-0"  onChange={(e) => setPriority(e.target.value)}>
+                <select class="form-select  rounded-0" value={priority}  onChange={(e) => setPriority(e.target.value)}>
                     <option selected disabled>Select</option>
                     <option>1</option>
                     <option>2</option>
@@ -148,7 +161,7 @@ const handleShow = () => setShow(true);
             </div>
             <div class="col-xl-6">
                 <label for="" class="form-label">Description</label>
-                <textarea class="form-control rounded-0" rows="5"  onChange={(e) => setDescription(e.target.value)}></textarea>
+                <textarea class="form-control rounded-0" rows="5" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
             </div>
         </div>
         </form>
@@ -156,7 +169,7 @@ const handleShow = () => setShow(true);
         <div class="col-xl d-flex flex-row-reverse text-white">
              
                <button disabled class="ms-3 text-white btn Btn rounded-0 border-0"><FaPlus className='me-1 mb-1'/>SAVE & ADD NEW TASK</button> 
-                <button class="ms-3 text-white btn Btn rounded-0 border-0" type='submit' onClick={postData}><MdSave className='me-1 mb-1 fs-5'/>SAVE</button>
+                <button class="ms-3 text-white btn Btn rounded-0 border-0" type='submit' onClick={updateTask}><MdSave className='me-1 mb-1 fs-5'/>SAVE</button>
                         
             </div>
        
@@ -165,8 +178,8 @@ const handleShow = () => setShow(true);
 
 {/* Modal For Successful save and adding task ---------------- */}        
                  <Modal show={show} id="deleteModalBox">
-                  <Modal.Body id="deleteModal" >Task Added Successfully.
-                  <NavLink to='/' ><Button variant="success" className='float-end btn-sm ' onClick={handleClose} >Ok</Button></NavLink>
+                  <Modal.Body id="deleteModal" >Task Updated Successfully.
+                  <NavLink to={"/GanttChart/"+ params.id} ><Button variant="success" className='float-end btn-sm ' onClick={handleClose} >Ok</Button></NavLink>
                   </Modal.Body>
                   </Modal>
   
@@ -175,4 +188,4 @@ const handleShow = () => setShow(true);
   )
 }
 
-export default AddTask
+export default EditTask

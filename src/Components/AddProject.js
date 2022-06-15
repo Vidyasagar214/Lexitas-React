@@ -1,16 +1,15 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {FaArrowLeft,FaPlus} from 'react-icons/fa'
 import {MdSave} from 'react-icons/md';
 import {NavLink} from 'react-router-dom';
 import Header from './Header';
 import {Modal,Button} from 'react-bootstrap';
-import Select from 'react-select'
+import Select,{ StylesConfig } from 'react-select'
 import axios from 'axios';
 
 function AddProject() {
 
  // //Adding input----------------
- const [p_id, setP_id]=useState("")
  const [projectname, setProjectname] = useState('');
  const [startdate, setStartdate] = useState('');
  const [enddate, setEnddate] = useState('');
@@ -68,7 +67,6 @@ function AddProject() {
    else{
        axios.post(`https://6295db8d810c00c1cb69856e.mockapi.io/Projects`, {
        projectname,startdate,enddate,status,division,projectmanager,projectmembers,description
-
        })
        handleShow()
         return true;
@@ -80,7 +78,7 @@ const [show, setShow] = useState(false);
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
 
-     const Project_Members = [
+     const options = [
       { value: 'John Doe', label: 'John Doe' },
       { value: 'Jimmy Carter', label: 'Jimmy Carter' },
       { value: 'Loius', label: 'Loius' },
@@ -88,6 +86,8 @@ const handleShow = () => setShow(true);
       { value: 'Travis ', label: 'Travis' },
       { value: 'Jamisaon', label: 'Jamisaon' }
     ];
+    const colourStyles = {
+      control: (styles) => ({ ...styles, borderRadius: '0px' })}
 
   return (
    <>
@@ -155,7 +155,7 @@ const handleShow = () => setShow(true);
     <div class="row mb-4">
         <div class="col-xl-6">
             <label for="taskname" class="form-label">Project Members</label>
-                <Select options={Project_Members}  isMulti={true} onChange={(options)=>{setProjectmembers(options)}} />
+                <Select   styles={colourStyles} options={options}  isMulti={true} onChange={(options)=>{setProjectmembers(options.map(x=>x.value))}} />
         </div>
             <div class="col-xl-6">
                 <label for="" class="form-label">Description</label>
@@ -165,30 +165,19 @@ const handleShow = () => setShow(true);
         </form>
         {error&&<p className='text-danger fst-italic'>{error}</p>}
             <div class="col-xl d-flex flex-row-reverse text-white">
-               {/* <NavLink to={"/AddProject/AddTask/"+projectname}> 
-               <button type="button" class="ms-3 text-white btn Btn rounded-0 border-0"><FaPlus className='me-1 mb-1'/>TASK</button> 
-               </NavLink> */}
                 <button class="ms-3 text-white btn Btn rounded-0 border-0"type='submit' onClick={postData}><MdSave className='me-1 mb-1 fs-5'/>SAVE</button>
             </div>
 
     </div>                      
    </div>
 
-   {/* Modal For Successful save and adding task ---------------- */}        
-               <Modal show={show}>
-                  <Modal.Header   >
-                     <Modal.Title>Project Added Successfully</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body  >Add a new task for the Project</Modal.Body>
-                  <Modal.Footer>
-                  <NavLink to={"/AddTask/"+p_id}> 
-                    <button type="button" onClick={handleClose} class="ms-3 text-white btn Btn rounded-0 border-0"><FaPlus className='me-1 mb-1'/>TASK</button> 
-                  </NavLink>
-                  <NavLink to={"/"}> 
-                   <Button variant="danger" onClick={handleClose}>Cancel</Button>
-                   </NavLink>
-                  </Modal.Footer>
-                </Modal>
+
+                {/* Modal For Successful save and adding task ---------------- */}        
+                <Modal show={show} >
+                  <Modal.Body >Project Added Successfully.
+                  <NavLink to='/' ><Button variant="success" className='float-end btn-sm ' onClick={handleClose} >Ok</Button></NavLink>
+                  </Modal.Body>
+                  </Modal>
    
    </>
   )

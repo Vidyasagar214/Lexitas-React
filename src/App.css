@@ -90,7 +90,7 @@ input::placeholder{
 
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,400,700");
 .gantt {
-  display: grid;
+  /* display: grid; */
   border: 0;
   border-radius: 12px;
   position: relative;
@@ -99,7 +99,7 @@ input::placeholder{
 }
 .gantt__row {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 300px 1fr;
   background-color: #fff;
 }
 .gantt__row--lines {
@@ -107,7 +107,7 @@ input::placeholder{
   height: 100%;
   width: 100%;
   background-color: transparent;
-  grid-template-columns: 260px repeat(12, 1fr);
+  grid-template-columns: 300px repeat(12, 1fr);
 }
 .gantt__row--lines span {
   display: block;
@@ -116,7 +116,7 @@ input::placeholder{
 .gantt__row--months {
   color: rgb(36, 35, 35);
   background-color:white !important;
-  grid-template-columns: 260px repeat(12, 1fr);
+  grid-template-columns: 300px repeat(12, 1fr);
 }
 .gantt__row--months span {
   text-align: center;
@@ -130,11 +130,10 @@ input::placeholder{
   font-size: 13px;
   font-weight: bold;
   text-align: start;
-  padding-left: 20px;
 }
 .gantt__row-bars {
   list-style: none;
-  display: grid;
+  display: grid;  
   padding: 9px 0;
   margin: 0;
   grid-template-columns: repeat(12, 1fr);
@@ -145,10 +144,14 @@ input::placeholder{
   text-align: left;
   font-size: 14px;
   min-height: 15px;
-  padding: 5px 12px;
+  padding: 5px 0px;
   color: #fff;
   overflow: hidden;
   position: relative;
   cursor: pointer;
   border-radius: 20px;
+ 
+}
+.Bar{
+  opacity: 0.5;
 }

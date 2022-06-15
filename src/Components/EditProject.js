@@ -68,8 +68,6 @@ function EditProject() {
 
        })
        handleShow()
-      alert("Data Updated Successfully");
-      console.log(projectname)
        return true;
      }}
 
@@ -89,14 +87,16 @@ function EditProject() {
     
 
 // option for multiselect---------
-     const Project_Members = [
+     const options = [
       { value: 'John Doe', label: 'John Doe' },
       { value: 'Jimmy Carter', label: 'Jimmy Carter' },
       { value: 'Loius', label: 'Loius' },
       { value: 'Van Persey', label: 'Van Persey' },
       { value: 'Travis ', label: 'Travis' },
       { value: 'Jamisaon', label: 'Jamisaon' }
-    ];  
+    ];
+    const colourStyles = {
+      control: (styles) => ({ ...styles, borderRadius: '0px' })}  
 
     // for Add modal------------------------
 const [show, setShow] = useState(false);
@@ -170,7 +170,7 @@ const handleShow = () => setShow(true);
     <div class="row mb-4">
         <div class="col-xl-6">
             <label for="taskname" class="form-label">Project Members</label>
-            <Select options={Project_Members} isMulti={true} onChange={(options)=>{setProjectmembers(options)}} />
+            <Select  styles={colourStyles} options={options} isMulti={true} value={projectmembers.split(",")} />
         </div>
             <div class="col-xl-6">
                 <label for="" class="form-label">Description</label>
