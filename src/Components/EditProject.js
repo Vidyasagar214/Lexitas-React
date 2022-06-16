@@ -84,7 +84,7 @@ function EditProject() {
         setProjectmembers(localStorage.getItem('Project Members'));
         setDescription(localStorage.getItem('Description'));
     }, []);
-    
+    console.log(projectmembers)
 
 // option for multiselect---------
      const options = [
@@ -102,7 +102,6 @@ function EditProject() {
 const [show, setShow] = useState(false);
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
-
     
   return (
    <>
@@ -170,8 +169,8 @@ const handleShow = () => setShow(true);
     <div class="row mb-4">
         <div class="col-xl-6">
             <label for="taskname" class="form-label">Project Members</label>
-            <Select  styles={colourStyles} options={options} isMulti={true} value={projectmembers.split(",")} />
-        </div>
+            <Select  styles={colourStyles} options={options} isMulti={true} value={options.filter(obj => projectmembers.includes(obj.value))} onChange={(options)=>{setProjectmembers(options.map(x=>x.value))}}/>
+            </div>
             <div class="col-xl-6">
                 <label for="" class="form-label">Description</label>
                 <textarea class="form-control  rounded-0" rows="4" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
@@ -191,7 +190,10 @@ const handleShow = () => setShow(true);
    {/* Modal For Successful save and adding task ---------------- */}        
                  <Modal show={show} id="deleteModalBox">
                   <Modal.Body id="deleteModal" >Project Updated Successfully.
-                  <Button variant="success" className='float-end btn-sm ' onClick={handleClose} >Ok</Button>                  </Modal.Body>
+                  <NavLink to="/">
+                  <Button variant="success" className='float-end btn-sm ' onClick={handleClose} >Ok</Button>             
+                  </NavLink>
+                  </Modal.Body>
                   </Modal>
    </>
   )

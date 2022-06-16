@@ -155,7 +155,7 @@ const handleShow = () => setShow(true);
         {error&&<p className='text-danger fst-italic'>{error}</p>}
         <div class="col-xl d-flex flex-row-reverse text-white">
              
-               <button disabled class="ms-3 text-white btn Btn rounded-0 border-0"><FaPlus className='me-1 mb-1'/>SAVE & ADD NEW TASK</button> 
+               <button  class="ms-3 text-white btn Btn rounded-0 border-0" type='submit' onClick={postData}><FaPlus className='me-1 mb-1'/>SAVE & ADD NEW TASK</button> 
                 <button class="ms-3 text-white btn Btn rounded-0 border-0" type='submit' onClick={postData}><MdSave className='me-1 mb-1 fs-5'/>SAVE</button>
                         
             </div>

@@ -127,8 +127,7 @@ const onDelete = (id) => {
                 <option value='Active'>Active</option>
                 <option value='Delayed'>Delayed</option>
                 <option value='Not Started'>Not Started</option>
-                <option value='Completed'>Completed</option>
-                
+                <option value='Completed'>Completed</option> 
               </select>
     </div>
     </div>
@@ -179,6 +178,12 @@ const onDelete = (id) => {
         var days = time / (1000 * 3600 * 24);
         var time2 = date1.getTime() - date3.getTime();
         var days2 = time2 / (1000 * 3600 * 24);
+
+      var entering = (e) => {
+          e.children[0].style.borderTopColor = 'green';
+          e.children[1].style.backgroundColor = 'lightgrey';
+          e.children[1].style.color = 'black';
+      };
         return(
          <>
        
@@ -202,7 +207,7 @@ const onDelete = (id) => {
            <div class={`gantt__row-first rounded-pill ps-5 my-1 me-3 ${data.status}`}>
          
            {data.taskname}<br/><small>
-            {DateFormate(data.startdate)} <FaArrowsAltH/> {DateFormate(data.enddate)}
+            {DateFormate(data.startdate)} <FaArrowsAltH/> {DateFormate(data.enddate)}{"   "}
              {data.taskowner}</small>
            
            </div>
@@ -210,14 +215,14 @@ const onDelete = (id) => {
        
          <ul class="gantt__row-bars"> 
         
-          <OverlayTrigger  overlay={<Tooltip id="tooltip-disabled">{DateFormate(data.startdate)} <FaArrowsAltH/> {DateFormate(data.enddate)}<br></br>{data.status} <br></br>{`${days} days`}</Tooltip>}>         
+          <OverlayTrigger  overlay={<Tooltip id="tooltip-disabled">{DateFormate(data.startdate)} <FaArrowsAltH/> {DateFormate(data.enddate)}<br></br>{data.status} <br></br>{`${days} days`}<br></br>{data.description}</Tooltip>} onEntering={entering}>         
             <li  style={{marginLeft:`${days2*2.64}px`,width:`${days*2.64}px`}} class={`${data.status} text-start pe-1 Bar`} >
                
                 
                 </li>
                
             </OverlayTrigger>
-            <OverlayTrigger  overlay={<Tooltip id="tooltip-disabled">{DateFormate(data.startdate)} <FaArrowsAltH/> {DateFormate(data.enddate)}<br></br>{data.status} <br></br>{`${days} days`}</Tooltip>}>         
+            <OverlayTrigger  overlay={<Tooltip id="tooltip-disabled">{DateFormate(data.startdate)} <FaArrowsAltH/> {DateFormate(data.enddate)}<br></br>{data.status} <br></br>{`${days} days`}<br></br>{data.description}</Tooltip>} onEntering={entering}>         
             <span class={`${data.status} rounded-pill pb-1 pe-2 position-absolute`} style={{paddingLeft:`${days}px`,marginLeft:`${days2*2.64}px`,cursor:"pointer"}} > {`${days}`}</span>
             </OverlayTrigger>
         </ul> 
