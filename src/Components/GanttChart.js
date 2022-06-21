@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import {FaChartBar,FaListAlt,FaArrowLeft,FaPlus,FaArrowsAltH, FaEdit,FaTrashAlt} from 'react-icons/fa';
-import { OverlayTrigger,Tooltip,Button,Modal } from 'react-bootstrap';
+import { OverlayTrigger,Tooltip } from 'react-bootstrap';
 import {NavLink,useParams} from 'react-router-dom';
 import Header from './Header'
 import axios from'axios'
@@ -16,7 +16,6 @@ const [projectData,setProjectData]=useState([]);
 const [parProjectData,setParProjectData]=useState();
 
 let filterStatus=(data,statusName)=>{
-  
   let statusFilter = data.filter(d=>d.status === statusName)
   setTaskdata(statusFilter);  
 }
@@ -140,10 +139,10 @@ const onDelete = (id) => {
     <small><span class="ms-3 ">End Date<br/><span class="fw-bold ms-3">{DateFormate(parProjectData?.enddate)}</span></span></small>
    </div>
    <div class="d-flex ">
-     <div className='bg-warning text-white text-center pt-2 rounded-pill'mx-1 style={{width:"130px"}}>Active</div>
-     <div className='bg-danger text-white text-center pt-2 rounded-pill mx-1' style={{width:"130px"}}>Delayed</div>
-     <div className='bg-secondary text-white text-center pt-2 rounded-pill mx-1' style={{width:"130px"}}>Not Started</div>
-     <div className='bg-success text-white text-center pt-2 rounded-pill mx-1' style={{width:"130px"}}>Completed</div>
+     <div className='bg-warning text-white text-center pt-2 rounded-pill mx-1' style={{width:"130px",cursor:"pointer"}}  onClick={() => setStatus("Active")}>Active</div>
+     <div className='bg-danger text-white text-center pt-2 rounded-pill mx-1' style={{width:"130px",cursor:"pointer"}} onClick={() => setStatus("Delayed")}>Delayed</div>
+     <div className='bg-secondary text-white text-center pt-2 rounded-pill mx-1' style={{width:"130px",cursor:"pointer"}} onClick={() => setStatus("Not Started")}>Not Started</div>
+     <div className='bg-success text-white text-center pt-2 rounded-pill mx-1' style={{width:"130px",cursor:"pointer"}} onClick={() => setStatus("Completed")}>Completed</div>
      <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Chart View</Tooltip>}>
     <a href="#" class="btn-sm  fw-bold Btn rounded-0 " type="button"> <FaChartBar class="fa-solid fa-chart-bar mx-2 pt-1 text-white fs-3"/></a>
     </OverlayTrigger>
@@ -173,11 +172,14 @@ const onDelete = (id) => {
     { taskdata.map(data=>{
         var date1 = new Date(data.startdate);
         var date2 = new Date(data.enddate);
-        var date3 = new Date("01/01/2022")
+        var date3 = new Date("01/01/2022");
+        var date4 = new Date();
         var time = date2.getTime() - date1.getTime();
         var days = time / (1000 * 3600 * 24);
         var time2 = date1.getTime() - date3.getTime();
         var days2 = time2 / (1000 * 3600 * 24);
+        var time3 = date4.getTime() - date1.getTime();
+        var days3 = parseInt(time3 / (1000 * 3600 * 24));
 
       var entering = (e) => {
           e.children[0].style.borderTopColor = 'green';
@@ -204,7 +206,7 @@ const onDelete = (id) => {
                   </OverlayTrigger>
                   </span>
 
-           <div class={`gantt__row-first rounded-pill ps-5 my-1 me-3 ${data.status}`}>
+           <div class={`gantt__row-first rounded-pill ps-5  my-1 me-3 ${data.status}`}>
          
            {data.taskname}<br/><small>
             {DateFormate(data.startdate)} <FaArrowsAltH/> {DateFormate(data.enddate)}{"   "}
@@ -223,7 +225,7 @@ const onDelete = (id) => {
                
             </OverlayTrigger>
             <OverlayTrigger  overlay={<Tooltip id="tooltip-disabled">{DateFormate(data.startdate)} <FaArrowsAltH/> {DateFormate(data.enddate)}<br></br>{data.status} <br></br>{`${days} days`}<br></br>{data.description}</Tooltip>} onEntering={entering}>         
-            <span class={`${data.status} rounded-pill pb-1 pe-2 position-absolute`} style={{paddingLeft:`${days}px`,marginLeft:`${days2*2.64}px`,cursor:"pointer"}} > {`${days}`}</span>
+            <span class={`${data.status} rounded-pill pb-1 pe-2 position-absolute`} style={{paddingLeft:`${days}px`,marginLeft:`${days2*2.64}px`,cursor:"pointer"}} > {`${days3}`}</span>
             </OverlayTrigger>
         </ul> 
         
